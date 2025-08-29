@@ -20,6 +20,7 @@ function createGrid (x){
             const div = document.createElement("div");
 
             // edit
+            div.setAttribute("style", "opacity: 0.1;");
             div.setAttribute("class", "child");
 
             // appendChild to parent div
@@ -33,14 +34,31 @@ function createGrid (x){
 
 createGrid(16);
 
+function randomColor() {
+    const red = Math.floor(Math.random() * 256);
+    const green = Math.floor(Math.random() * 256);
+    const blue = Math.floor(Math.random() * 256);
+
+    return `rgb(${red}, ${green}, ${blue})`;
+}
+
 container.addEventListener("mouseover", function(e) {
     if (e.target.className === "child") {
-        e.target.classList.add("hovered");
+
+        // increase opacity by 0.1
+        let opacity = e.target.style.opacity;
+        opacity *= 10;
+        opacity += 1;
+        opacity /= 10;
+        e.target.style.opacity = opacity;
+
+        // change color to random RGB
+        e.target.style.backgroundColor = randomColor();
     }
 });
 
 btn.addEventListener("click", function() {
-    const userInput = parseInt(prompt('Enter number for grid size:'));
+    const userInput = parseInt(prompt('Enter number for grid size (0-100):'));
 
     if (userInput == NaN || userInput > 100 || userInput < 0) {
         alert("Please enter a valid number")
